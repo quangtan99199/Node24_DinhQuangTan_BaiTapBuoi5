@@ -5,3 +5,67 @@ CREATE TABLE users(
 	email VARCHAR(255),
 	password VARCHAR(255)
 )
+
+-- RESTAURANT TABLE --
+CREATE TABLE restaurant(
+	res_id INT PRIMARY KEY AUTO_INCREMENT,
+	res_name VARCHAR(255),
+	image VARCHAR(255),
+	res_desc VARCHAR(255)
+)
+
+-- RATE_RES TABLE --
+CREATE TABLE rate_res(
+	user_id INT,
+	res_id INT,
+	amount INT,
+	date_rate DATETIME,
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
+	FOREIGN KEY (res_id) REFERENCES restaurant(res_id)
+)
+
+-- LIKE_RES TABLE --
+CREATE TABLE like_res(
+	user_id INT,
+	res_id INT,
+	date_like DATETIME,
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
+	FOREIGN KEY (res_id) REFERENCES restaurant(res_id)
+)
+
+-- FOOD_TYPE TABLE --
+CREATE TABLE food_type(
+	type_id INT PRIMARY KEY AUTO_INCREMENT,
+	type_name VARCHAR(255)
+)
+
+-- FOOD TABLE --
+CREATE TABLE food(
+	food_id INT PRIMARY KEY AUTO_INCREMENT,
+	food_name VARCHAR(255),
+	image VARCHAR(255),
+	price FLOAT,
+	food_desc VARCHAR(255),
+	type_id INT,
+	FOREIGN KEY (type_id) REFERENCES food_type(type_id)
+)
+
+-- ORDER TABLE --
+CREATE TABLE orders(
+	user_id INT,
+	food_id INT,
+	amount INT,
+	code VARCHAR(255),
+	arr_sub_id VARCHAR(255),
+	FOREIGN KEY (user_id) REFERENCES users(user_id),
+	FOREIGN KEY (food_id) REFERENCES food(food_id)
+)
+
+-- SUB_FOOD TABLE --
+CREATE TABLE sub_food(
+	sub_id INT PRIMARY KEY AUTO_INCREMENT,
+	sub_name VARCHAR(255),
+	sub_price FLOAT,
+	food_id INT,
+	FOREIGN KEY (food_id) REFERENCES food(food_id)
+)
